@@ -60,45 +60,39 @@ esac
 # Install correct dependencies according to $STACK
 case "${STACK}" in
   "heroku-24")
-    error "This buildpack has reached end of life. Please use https://github.com/heroku/heroku-buildpack-chrome-for-testing"
+    PACKAGES="
+      fonts-liberation
+      libasound2t64
+      libatk-bridge2.0-0
+      libatk1.0-0
+      libcups2
+      libgbm1
+      libxcomposite1
+      libxdamage1
+      libxfixes3
+      libxkbcommon0
+      libxrandr2
+    "
     ;;
-  "heroku-18" | "heroku-20" | "heroku-22")
-    topic "###### WARNING ######"
-    topic "This buildpack is deprecated. Please use https://github.com/heroku/heroku-buildpack-chrome-for-testing"
-    topic "#####################"
-
+  "heroku-20" | "heroku-22")
     # the package list is found by using ci:debug then running ldd $GOOGLE_CHROME_BIN | grep not
     # also look here for more packages/notes https://developers.google.com/web/tools/puppeteer/troubleshooting
     PACKAGES="
-      gconf-service
-      libappindicator1
+      fonts-liberation
       libasound2
-      libatk1.0-0
       libatk-bridge2.0-0
-      libcairo-gobject2
-      libdrm2
+      libatk1.0-0
+      libcups2
       libgbm1
-      libgconf-2-4
-      libgtk-3-0
-      libnspr4
-      libnss3
-      libx11-xcb1
-      libxcb-dri3-0
       libxcomposite1
-      libxcursor1
       libxdamage1
       libxfixes3
-      libxi6
-      libxinerama1
+      libxkbcommon0
       libxrandr2
-      libxshmfence1
-      libxss1
-      libxtst6
-      fonts-liberation
     "
     ;;
   *)
-    error "STACK must be 'heroku-18', 'heroku-20' or 'heroku-22', not '${STACK}'."
+    error "STACK must be 'heroku-20', 'heroku-22' or 'heroku-24', not '${STACK}'."
 esac
 
 if [ ! -f $CACHE_DIR/PURGED_CACHE_V1 ]; then
